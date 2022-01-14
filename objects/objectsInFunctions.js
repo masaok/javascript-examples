@@ -5,36 +5,56 @@ const someFunction = ({ someAttr, otherAttr = null }) => {
   };
 };
 
-const newFunction = (obj = {}) => {
-  const filtered = Object.fromEntries(
-    Object.entries(obj).filter(([k, v]) => ![null, undefined].includes(v))
-  );
-
-  // Return the filtered parameters, and some other important stuff specific to this function
-  return {
-    ...filtered,
+const newFunction = ({ someAttr, otherAttr }) => {
+  const results = {
+    someAttr,
+    otherAttr,
     and: "some",
     other: "stuff",
   };
+
+  // Return the filtered parameters, but include the other stuff
+  return Object.fromEntries(
+    Object.entries(results).filter(([k, v]) => ![null, undefined].includes(v))
+  );
+};
+
+const splatFunction = ({ ...stuff }) => {
+  const results = {
+    ...stuff,
+    and: "some",
+    other: "stuff",
+  };
+
+  // Return the filtered parameters, but include the other stuff
+  return Object.fromEntries(
+    Object.entries(results).filter(([k, v]) => ![null, undefined].includes(v))
+  );
 };
 
 console.log(
   newFunction({
     someAttr: "hello",
-    otherAttr: null,
     undefAttr: undefined,
   })
 );
 
 console.log(
-  someFunction({
+  splatFunction({
     someAttr: "hello",
-    otherAttr: "world",
+    undefAttr: undefined,
   })
 );
 
-console.log(
-  someFunction({
-    someAttr: "hello",
-  })
-);
+// console.log(
+//   someFunction({
+//     someAttr: "hello",
+//     otherAttr: "world",
+//   })
+// );
+
+// console.log(
+//   someFunction({
+//     someAttr: "hello",
+//   })
+// );
