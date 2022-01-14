@@ -5,6 +5,27 @@ const someFunction = ({ someAttr, otherAttr = null }) => {
   };
 };
 
+const newFunction = (obj = {}) => {
+  const filtered = Object.fromEntries(
+    Object.entries(obj).filter(([k, v]) => ![null, undefined].includes(v))
+  );
+
+  // Return the filtered parameters, and some other important stuff specific to this function
+  return {
+    ...filtered,
+    and: "some",
+    other: "stuff",
+  };
+};
+
+console.log(
+  newFunction({
+    someAttr: "hello",
+    otherAttr: null,
+    undefAttr: undefined,
+  })
+);
+
 console.log(
   someFunction({
     someAttr: "hello",
